@@ -1,0 +1,449 @@
+{
+  "consumes": [
+    "application/json",
+    "application/xml"
+  ],
+  "produces": [
+    "application/json",
+    "application/xml"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Bu uygulamanın amacı kendi kodunu kullanarak API dökümanını da\nüreten örnek bir go uygulaması ortaya koymaktır.\n\nUygulama go kodu ve yorum satırlarında kullanılan özel direktifleri\nkullanarak swagger 2.0 uyumlu bir API spesikasyon dökümanı üretmektedir.",
+    "title": "RESTAPI-GO-SWAGGER uygulaması API dökümanı.",
+    "contact": {
+      "name": "sfy",
+      "email": "sfazilyesil@github.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    },
+    "version": "0.0.1"
+  },
+  "host": "localhost",
+  "basePath": "/v2",
+  "paths": {
+    "/ping": {
+      "get": {
+        "description": "Uygulamanın ayakta olup olmadığını basitçe anlamaya\nyarayan servis. Geriye pong cevabını gönderir.",
+        "tags": [
+          "Genel"
+        ],
+        "summary": "Ping isteği gönder",
+        "operationId": "send-ping",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/PongResponse"
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "description": "Servis ürünlere yeni bir ürün ekler ve eklenen ürünü geriye\ngönderir.",
+        "tags": [
+          "Ürünler"
+        ],
+        "summary": "Yeni bir ürün ekle",
+        "operationId": "create-product",
+        "parameters": [
+          {
+            "x-go-name": "Product",
+            "description": "Eklenecek ürüne ait bilgiler",
+            "name": "product",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400"
+          },
+          "502": {
+            "$ref": "#/responses/ErrorResponse502"
+          },
+          "default": {
+            "$ref": "#/responses/GenericErrorResponse"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "description": "Referansı verilen ürünü iletir.",
+        "tags": [
+          "Ürünler"
+        ],
+        "summary": "Referans ile ürün getir",
+        "operationId": "get-product-by-id",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "description": "Ürün referansı",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400"
+          },
+          "404": {
+            "$ref": "#/responses/ErrorResponse404"
+          },
+          "default": {
+            "$ref": "#/responses/GenericErrorResponse"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "description": "Servis kullanıcılara yeni bir kullanıcı ekler ve eklenen kullanıcıyı\ngeriye gönderir.",
+        "tags": [
+          "Kulanıcılar"
+        ],
+        "summary": "Yeni bir kullanıcı ekle",
+        "operationId": "create-user",
+        "parameters": [
+          {
+            "description": "Kullanıcıya ait bilgiler",
+            "name": "User",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400"
+          },
+          "default": {
+            "$ref": "#/responses/GenericErrorResponse"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "Referansı verilen kullanıcıyı iletir.",
+        "tags": [
+          "Kulanıcılar"
+        ],
+        "summary": "Referans ile kullanıcı getir",
+        "operationId": "get-user-by-id",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "description": "Kullanıcı referansı",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      },
+      "put": {
+        "description": "Referansı verilen kullanıcıyı günceller.",
+        "tags": [
+          "Kulanıcılar"
+        ],
+        "summary": "Kullanıcıyı güncelle",
+        "operationId": "update-user",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "Id",
+            "description": "Kullanıcı referansı",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Kullanıcıya ait bilgiler",
+            "name": "User",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ErrorResponse400"
+          },
+          "404": {
+            "$ref": "#/responses/ErrorResponse404"
+          },
+          "default": {
+            "$ref": "#/responses/GenericErrorResponse"
+          }
+        }
+      }
+    },
+    "/welcome": {
+      "get": {
+        "description": "Gönderilen parametleri kullanarak hoş geldin mesajı üretip\ngönderir.",
+        "tags": [
+          "Genel"
+        ],
+        "summary": "Hoşgeldin mesajı al",
+        "operationId": "welcome",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "FirstName",
+            "description": "Kullanıcının adı",
+            "name": "firstName",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "LastName",
+            "description": "Kullanıcının soyadı",
+            "name": "lastName",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "SomeHeader",
+            "description": "HTTP header içinde gönderilen bir bilgi",
+            "name": "some-header",
+            "in": "header"
+          },
+          {
+            "x-go-name": "SomeBody",
+            "description": "HTTP body içinde gönderilen bir bilgi",
+            "name": "some-body",
+            "in": "body",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/WelcomeResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Address": {
+      "description": "Adres bilgisi",
+      "type": "object",
+      "properties": {
+        "city": {
+          "description": "Şehir",
+          "type": "string",
+          "x-go-name": "City"
+        },
+        "country": {
+          "description": "Ülke",
+          "type": "string",
+          "x-go-name": "Country"
+        },
+        "street": {
+          "description": "Sokak",
+          "type": "string",
+          "x-go-name": "Street"
+        }
+      },
+      "x-go-package": "github.com/sfazilyesil/restapi-go-swagger/model"
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "title": "Servisten dönen hata modeli.",
+      "properties": {
+        "code": {
+          "description": "Hata kodu",
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "message": {
+          "description": "Hata mesajı",
+          "type": "string",
+          "x-go-name": "Message"
+        }
+      },
+      "x-go-package": "github.com/sfazilyesil/restapi-go-swagger/model"
+    },
+    "Pong": {
+      "type": "object",
+      "title": "Ping isteğine dönülen pong cevap modeli.",
+      "properties": {
+        "message": {
+          "description": "Pong mesajı",
+          "type": "string",
+          "x-go-name": "Message"
+        }
+      },
+      "x-go-package": "github.com/sfazilyesil/restapi-go-swagger/model"
+    },
+    "Product": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "description": "Ürün  kimliği",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "description": "Ürün ismi",
+          "type": "string",
+          "minLength": 3,
+          "x-go-name": "Name"
+        },
+        "price": {
+          "description": "Ürün fiyatı",
+          "type": "number",
+          "format": "double",
+          "minimum": 1,
+          "x-go-name": "Price"
+        },
+        "productionDate": {
+          "description": "Ürünün üretim tarihi",
+          "type": "string",
+          "format": "date",
+          "x-go-name": "ProductionDate"
+        }
+      },
+      "x-go-package": "github.com/sfazilyesil/restapi-go-swagger/model"
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "birthday": {
+          "description": "Kullanıcının doğum günü",
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "Birthday"
+        },
+        "email": {
+          "description": "Kullanıcının eposta adresi",
+          "type": "string",
+          "format": "email",
+          "uniqueItems": true,
+          "x-go-name": "Email"
+        },
+        "gender": {
+          "description": "Kullanıcının cinsiyeti",
+          "type": "string",
+          "default": "K",
+          "enum": [
+            "E",
+            "K"
+          ],
+          "x-go-name": "Gender"
+        },
+        "id": {
+          "description": "Kullanıcının  referansı",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ID"
+        },
+        "name": {
+          "description": "Kullanıcının ismi",
+          "type": "string",
+          "minLength": 3,
+          "x-go-name": "Name"
+        }
+      },
+      "x-go-package": "github.com/sfazilyesil/restapi-go-swagger/model"
+    }
+  },
+  "responses": {
+    "ErrorResponse400": {
+      "description": "Hatalı istek. Servise gönderilen parametreler hatalı.",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      }
+    },
+    "ErrorResponse404": {
+      "description": "Kayıt bulunamadı. Verilen kriterlere uygun kayıt bulunamadı.",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      }
+    },
+    "ErrorResponse502": {
+      "description": "Alt servis çağrısından hata alındı.",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      }
+    },
+    "GenericErrorResponse": {
+      "description": "Diğer hatalar.",
+      "schema": {
+        "$ref": "#/definitions/ErrorResponse"
+      }
+    },
+    "PongResponse": {
+      "description": "Ping isteğine gönderilen pong cevabı",
+      "schema": {
+        "$ref": "#/definitions/Pong"
+      }
+    },
+    "WelcomeResponse": {
+      "description": "Hoşgeldin servisinden dönen cevap."
+    }
+  }
+}
