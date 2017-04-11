@@ -371,7 +371,7 @@ onu farklı işlemlere girdi olarak verebiliyoruz.
 
 ReDoc swagger 2.0 formatında yazılmış bir API dökümanını güzel bir Html dökümanına çeviriyor.
 
-![alt text](github.com/sfazilyesil/restapi-go-swagger/redoc.png)
+![alt text](https://github.com/sfazilyesil/restapi-go-swagger/blob/master/redoc.png)
 
 
 ## Kaynaklar
