@@ -13,7 +13,7 @@ Go kodundan nasıl otomatik olarak üretebiliriz?
 4- Üretilen dökümanı nasıl görüntüleyebiliriz?
 
 ## Çözüm
-Görüp inceleyeildiğim kadarıyla go-swagger, Swagger 2.0 için ekosistemdeki en iyi/bütünlüklü 
+Görüp inceleyebildiğim kadarıyla go-swagger, Swagger 2.0 için ekosistemdeki en iyi/bütünlüklü 
 çözüm sunan golang kütüphanesi . Koddan döküman üretimi, dökümandan istemci ve sunucu oluşturulması, 
 döküman doğrulaması vb. şeyleri yapma yeteneğine sahip.
 

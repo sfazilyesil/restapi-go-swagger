@@ -1,10 +1,30 @@
 # restapi-go-swagger
 
-**Golang** ile yazılmış web servislerin **swagger 2.0** formatına uygun
+**Golang** ile yazılmış web servislerin **[swagger 2.0](http://swagger.io/)** formatına uygun
 **API dökümanı**nı otomatik olarak nasıl üretilebileceğimizi göstermek amacıyla 
 hazırlanmış bir **örnek uygulama**.
 
 Örnek uygulamanın genel anlatımı için: [bkz](https://github.com/sfazilyesil/restapi-go-swagger/blob/master/tutorial.md)
+
+<br/>
+
+### Problem Tanımı
+1- Go ile yazılmış bir REST API uygulamasının Swagger 2.0 formatına uygun API dökümanını 
+Go kodundan nasıl otomatik olarak üretebiliriz?
+
+2- Üretilen dökümanı nasıl doğrulayabiliriz?
+
+3- Bu işleri günlük çalışma akışına (ilgili build scriptlerine) nasıl dahil edebiliriz?
+
+4- Üretilen dökümanı nasıl görüntüleyebiliriz?
+
+<br/>
+
+### Çözüm
+[go-swagger](https://goswagger.io/) kütüphanesi ile go kodu ve yorum satırındaki dökümantasyon 
+direktifleriyle otomatik olarak döküman üretmek ve doğrulamak mümkün. Görüntülemek içinse
+[ReDoc](https://github.com/Rebilly/ReDoc) güzel seçeneklerden biri. Build akışına entegre etmek 
+içinse apidoc.sh gibi bir script yazıp onu ilgili akıştan çağırmak yeterli.
 
 <br/>
 
@@ -37,29 +57,6 @@ ile örnek uygulamanın api dökümanını yeniden üretebiliyoruz.
 
 
 ***
-<br/>
-
-### Problem Tanımı
-1- Go ile yazılmış bir REST API uygulamasının Swagger 2.0 formatına uygun API dökümanını 
-Go kodundan nasıl otomatik olarak üretebiliriz?
-
-2- Üretilen dökümanı nasıl doğrulayabiliriz?
-
-3- Bu işleri günlük çalışma akışına (ilgili build scriptlerine) nasıl dahil edebiliriz?
-
-4- Üretilen dökümanı nasıl görüntüleyebiliriz?
-
-<br/>
-
-### Çözüm
-Swagger 2.0 için ekosistemdeki en iyi golang kütüphanesi go-swagger. Koddan döküman, 
-dökümandan istemci ve sunucu, döküman doğrulaması vb. şeyleri yapma yeteneğine sahip.
-
-Bizim odaklandığımız problemler ise koddan otomatik olarak döküman üretimi ve 
-üretilen dökümanın doğrulanması ile sınırlı. Go-swagger kütüphanesi bu ihtiyaçları
-tamamıyla karşılayabiliyor. Bazı noktalarda başka kütüphanelerin sunduğu bazı kısa 
-yolları sunmasa da şu an için en bütünlüklü çözüm sunan kütüphane. Bazı şeyleri 
-yapış biçimini beğenmesek de bir yol öneriyor.
 
 <br/>
 
