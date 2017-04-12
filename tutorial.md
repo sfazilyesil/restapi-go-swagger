@@ -1,6 +1,6 @@
-# Golang Web Uygulaması - Koddan API Dökümantasyonu Üretimi
+# Golang Otomatik API Dökümantasyonu Üretimi
 
-Lafı sonra uzatırız. Şimdilik kestirmeden gidelim.
+Hikayesi başka zamana. Şimdilik lafı uzatmadan kestirmeden gidelim.
 
 ## Problem Tanımı
 1- Go ile yazılmış bir REST API uygulamasının Swagger 2.0 formatına uygun API dökümanını 
