@@ -4,7 +4,7 @@
 **API dökümanı**nı otomatik olarak nasıl üretilebileceğimizi göstermek amacıyla 
 hazırlanmış bir **örnek uygulama**.
 
-Örnek uygulamanın genel anlatımı için: [bkz](https://github.com/sfazilyesil/restapi-go-swagger/blob/master/tutorial.md)
+Örnek uygulamanın anlatımı için: [blog](https://medium.com/@s_fazil_yesil/golang-otomatik-api-d%C3%B6k%C3%BCmantasyonu-%C3%BCretimi-bca3c519395f)
 
 <br/>
 
