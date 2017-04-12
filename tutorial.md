@@ -1,8 +1,8 @@
-# Golang Web Uygulaması - Otomatik API Dökümantasyonu Üretimi
+# Golang Web Uygulaması - Koddan API Dökümantasyonu Üretimi
 
 Lafı sonra uzatırız. Şimdilik kestirmeden gidelim.
 
-## Problemler
+## Problem Tanımı
 1- Go ile yazılmış bir REST API uygulamasının Swagger 2.0 formatına uygun API dökümanını 
 Go kodundan nasıl otomatik olarak üretebiliriz?
 
@@ -13,8 +13,9 @@ Go kodundan nasıl otomatik olarak üretebiliriz?
 4- Üretilen dökümanı nasıl görüntüleyebiliriz?
 
 ## Çözüm
-Swagger 2.0 için ekosistemdeki en iyi golang kütüphanesi go-swagger. Koddan döküman, 
-dökümandan istemci ve sunucu, döküman doğrulaması vb. şeyleri yapma yeteneğine sahip.
+Görüp inceleyeildiğim kadarıyla go-swagger, Swagger 2.0 için ekosistemdeki en iyi/bütünlüklü 
+çözüm sunan golang kütüphanesi . Koddan döküman üretimi, dökümandan istemci ve sunucu oluşturulması, 
+döküman doğrulaması vb. şeyleri yapma yeteneğine sahip.
 
 Bizim odaklandığımız problemler ise koddan otomatik olarak döküman üretimi ve 
 üretilen dökümanın doğrulanması ile sınırlı. Go-swagger kütüphanesi bu ihtiyaçları
@@ -64,7 +65,7 @@ Aşağıda alıntılanan kod parçaları örnek uygulamaya ait.
 
 
 ### API Dökümanı Giriş Noktası
-restapi-go-swagger/main.go:
+*restapi-go-swagger/main.go* giriş noktasını oluşturuyor.
 ```go
 //go:generate swagger generate spec
 func main() {
@@ -74,7 +75,7 @@ func main() {
 ```
  
 ### Meta Bilgilerin İfade Edilmesi
-restapi-go-swagger/doc.go içeriği:
+*restapi-go-swagger/doc.go* içeriği:
 ```go
 // RESTAPI-GO-SWAGGER uygulaması API dökümanı.
 //
@@ -105,8 +106,8 @@ package main
 
 ### API Metotlarının İfade Edilmesi
 
-restapi-go-swagger/server/server.go dosyasından farklı durumlar ve 
-aynı şeyi farklı biçimlerde yapmaya birkaç örnek:
+Farklı durumlar ve aynı şeyi farklı biçimlerde yapmaya birkaç örnek 
+(*restapi-go-swagger/server/server.go* dosyasından):
 
 ```go
 	// swagger:route GET /welcome Genel welcome
@@ -181,8 +182,7 @@ aynı şeyi farklı biçimlerde yapmaya birkaç örnek:
 ```
 
 #### Modeller, İstekler ve Cevaplar
-
-restapi-go-swagger/models modülünden. 
+İlgili tanımlar *restapi-go-swagger/models* modülünde bulunuyor.
 
 Hata modeli:
 ```go
@@ -198,7 +198,7 @@ type ErrorResponse struct {
 }
 ```
 
-Sık dönülen hatalar için ortak cevaplar:
+Sık dönülen hatalar için ortak cevaplar (*restapi-go-swagger/models* modülünden):
 ```go
 // Hatalı istek. Servise gönderilen parametreler hatalı.
 // swagger:response
@@ -222,8 +222,8 @@ type ErrorResponse502 struct {
 }
 ```
 
-GET /welcome metodunun beklediği parametreler, bir kısmı header, bir kısmı query-string,
-bir kısmı body içinden gelmesi bekleniyor:
+*GET /welcome* metodunun beklediği parametreler. Bir kısmı istek başlığında, bir kısmı sorgu parametresi olarak,
+bir kısmı istek body içinde gelmesi bekleniyor.
 ```go
 // swagger:parameters welcome
 type WelcomeInput struct {
@@ -244,7 +244,7 @@ type WelcomeInput struct {
 }
 ```
 
-GET /welcome metodu geriye düz string cevap dönüyor:
+*GET /welcome* metodu geriye düz string cevap dönüyor:
 ```go
 // Hoşgeldin servisinden dönen cevap.
 // swagger:response
@@ -255,7 +255,7 @@ type WelcomeResponse struct {
 }
 ```
 
-Kullanıcı model tanımı:
+Kullanıcı modelinin tanımı:
 ```go
 // swagger:model
 type User struct {
@@ -298,7 +298,7 @@ type Address struct {
 }
 ```
 
-POST /users metodunun parametre tanımı:
+*POST /users* metodunun parametre tanımı:
 ```go
 // swagger:parameters create-user
 type CreateUserInput struct {
@@ -308,7 +308,7 @@ type CreateUserInput struct {
 }
 ```
 
-GET /produts/{id} metodunun parametre tanımı:
+*GET /produts/{id}* metodunun parametre/girdi tanımı:
 ```go
 // swagger:parameters get-product-by-id
 type ProductByIdInput struct {
@@ -321,14 +321,14 @@ type ProductByIdInput struct {
 ## Dökümanın Otomatik Olarak Üretimi ve Doğrulanması
 
 Döküman üretiliyor, doğrulanıyor ve hata oluştuğunda akış kesiliyor.
-Dosyayı günlük kullandığımız derleme akışlarına entegre ettiğimizde başarılı ve doğru
-biçimde güncel dökümantasyonun üretildiğinden emin olabiliceğiz. Tabi insan 
+Dosyayı günlük kullandığımız *build* akışına entegre ettiğimizde başarılı ve doğru
+biçimde güncel dökümantasyonun üretildiğinden emin olabileceğiz. Tabi insan 
 faktörü her zaman mevcut. Yazılan kodlarda ilgili API dökümantasyon direktiflerinin
 eklenmiş olduğunu varsayıyoruz şimdilik. Bir sonraki adım olarak yazılan kodların
 üretilen API dökümanına uyup uymadığını otomatik olarak test eden bir kodu 
-"build script"lerine entegre etmek olabilir.
+*build script*lerine entegre etmek olabilir.
 
-restapi-go-swagger/build.sh dosyası, yorumlar kaynak kodda mevcut:
+*restapi-go-swagger/apidoc.sh* dosyası. Yorumlar kaynak kodda mevcut.
 ```bash
 # go-swagger swagger komutunu derle.
 if ! [ -x swagger ]; then
@@ -364,14 +364,25 @@ echo "API dökümanı geçerli :)"
 swagger-ui haricinde üretilen dökümanı göze hoş gelecek biçimde görüntülemenin, 
 sunmanın yollarından biri de **ReDoc**. 
 
-Tıpkı Unix pipes gibi... Eğer makine tarafından okunabilir bir şey varsa elimizde,
-onu farklı işlemlere girdi olarak verebiliyoruz. 
+Tıpkı *Unix pipes* gibi... Eğer makine tarafından okunabilir bir şey varsa elimizde,
+onu farklı işlemlere girdi olarak verebiliriz. 
 
 **Kod -> API dökümanı -> Html dökümanı**  
 
 ReDoc swagger 2.0 formatında yazılmış bir API dökümanını güzel bir Html dökümanına çeviriyor.
 
 ![alt text](https://github.com/sfazilyesil/restapi-go-swagger/blob/master/redoc.png)
+
+
+## İleriye Dönük Fanteziler
+
+Hayal kurmak bedava. :)
+
+API dökümanından:
+- otomatik servis spesifikasyon testinin oluşturulması ve *build* akışına entegrasyonu.
+- özelleştirilmiş şablon oluşturup kullanarak istemci modülünün otomatik olarak oluşturulması.
+- çalışma anında isteklerin girdi/parametre denetimlerinin döküman üzerinden yapılması.
+- ...
 
 
 ## Kaynaklar
