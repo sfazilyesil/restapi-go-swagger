@@ -18,7 +18,6 @@ Go kodundan nasıl otomatik olarak üretebiliriz?
 
 4- Üretilen dökümanı nasıl görüntüleyebiliriz?
 
-<br/>
 
 ### Çözüm
 [go-swagger](https://goswagger.io/) kütüphanesi ile go kodu ve yorum satırındaki dökümantasyon 
